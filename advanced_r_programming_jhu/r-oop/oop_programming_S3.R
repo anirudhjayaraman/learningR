@@ -5,8 +5,10 @@
 special_1 <- structure(1, class = "special_number")
 class(special_1)
 
-print(special_1 + 3)
-class(special_1 + 3)
+some_variable <- special_1 + 3
+
+class(some_variable)
+print(some_variable)
 
 
 # Or this way -----------------------------------------------------------------
@@ -66,9 +68,9 @@ print.shape_S3 <- function(x){
       return(paste("an equilateral triangle of side", x$side_lengths[1]))
     } else {
       return(paste("a triangle with sides", 
-                    x$side_lengths[1],
-                    x$side_lengths[2],
-                    x$side_lengths[3]))
+                   x$side_lengths[1],
+                   x$side_lengths[2],
+                   x$side_lengths[3]))
     }
   }
   
@@ -101,6 +103,16 @@ class(square_4) <- c("shape_S3", "square")
 print(square_4)
 class(square_4)
 inherits(square_4, "square")
+
+# Attributes ------------------------------------------------------------------
+
+foo <- 1:10
+attributes(foo)  # NULL
+
+class(foo) <- "bar"
+attributes(foo)  # This prints out the following:
+# $class
+# [1] "bar"
 
 # -----------------------------------------------------------------------------
 # The S3 system does not have a formal way to define a class but typically, we 
@@ -149,7 +161,7 @@ print(summary(p))
 
 print.summary_polygon <- function(object, ...){
   cat(paste0("abcissa range: [", object$rng.x[1], ",", object$rng.x[2],"]\n",
-      "ordinate range: [", object$rng.y[1], ",", object$rng.y[2], "]\n"))
+             "ordinate range: [", object$rng.y[1], ",", object$rng.y[2], "]\n"))
   invisible(object)
 }
 
