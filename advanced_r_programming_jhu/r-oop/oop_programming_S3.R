@@ -175,4 +175,47 @@ print.summary_polygon <- function(x, ...) {
 
 print(summary(p))
 
+# Some more stuff worth looking at (from course forums) =======================
+
+data(airquality)
+
+## Just a glimpse of the data
+dplyr::glimpse(airquality)
+# Rows: 153
+# Columns: 6
+# $ Ozone   <int> 41, 36, 12, 18, NA, 28, 23, 19, 8, NA, 7, 16, 11, 14, 18, 14,...
+# $ Solar.R <int> 190, 118, 149, 313, NA, NA, 299, 99, 19, 194, NA, 256, 290, 2...
+# $ Wind    <dbl> 7.4, 8.0, 12.6, 11.5, 14.3, 14.9, 8.6, 13.8, 20.1, 8.6, 6.9, ...
+# $ Temp    <int> 67, 72, 74, 62, 56, 66, 65, 59, 61, 69, 74, 69, 66, 68, 58, 6...
+# $ Month   <int> 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5...
+# $ Day     <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18...
+
+## The name of a new class: 'pollution'
+## The task we want to do: Extracting data of a particular month
+
+airQuality <- structure(airquality, class = c("pollution", "data.frame"))
+
+extract_month <- function(data, ...) UseMethod("extract_month")
+
+extract_month.pollution <- function(data, n){
+  return(dplyr::filter(data, Month == n))
+}
+
+extract_month.pollution(airQuality, n = 9)
+
+# Some more stuff -------------------------------------------------------------
+
+# This is just a function to add the new class
+df_S3 <- function(df) {
+  structure(df, class = c("someClass", "data.frame"))
+}
+
+# Let's say the name of a data frame is 'my_df'
+my_df <- data.frame(a = c('p', 'q', 'r'), b = 5:3)
+
+new_df <- df_S3(my_df)  # [1] "someClass"  "data.frame"
+
+# Now you'll be able to see the class added
+class(new_df)
+
 ###############################################################################
